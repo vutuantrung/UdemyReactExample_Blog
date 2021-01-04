@@ -2,6 +2,7 @@ import axios from '../../../axios';
 import React, { Component } from 'react';
 
 import './NewPost.css';
+import { Redirect } from 'react-router';
 
 class NewPost extends Component {
     state = {
@@ -9,6 +10,7 @@ class NewPost extends Component {
         content: '',
         author: 'Max',
         error: false,
+        submitted: false,
     }
 
     postDataHandler = () => {
@@ -21,9 +23,10 @@ class NewPost extends Component {
         axios.post('/posts', data)
             .then((res) => {
                 if (res.status === 201) alert('Success.');
+                this.setState({ submitted: true });
             })
             .catch((err) => {
-                this.setState({ error: true });
+                this.setState({ error: true, submitted: true });
                 console.log(err);
             })
     }
@@ -33,8 +36,13 @@ class NewPost extends Component {
     }
 
     render() {
+        let redirect = null;
+        if (this.redirect.submitted) {
+            redirect = <Redirect to='posts' />;
+        }
         return (
             <div className="NewPost">
+                {redirect}
                 <h1>Add a Post</h1>
                 <label>Title</label>
                 <input type="text" value={this.state.title} onChange={(event) => this.setState({ title: event.target.value })} />
