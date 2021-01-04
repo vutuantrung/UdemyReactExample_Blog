@@ -5,7 +5,8 @@ import './FullPost.css';
 
 class FullPost extends Component {
     state = {
-        loadedPost: null
+        loadedPost: null,
+        error: false,
     }
 
     componentDidUpdate() {
@@ -15,6 +16,10 @@ class FullPost extends Component {
                     .then((res) => {
                         this.setState({ loadedPost: res.data });
                     })
+                    .catch((err) => {
+                        this.setState({ error: true });
+                        console.log(err);
+                    })
             }
         }
     }
@@ -23,6 +28,9 @@ class FullPost extends Component {
         axios.delete('https://jsonplaceholder.typicode.com/posts/' + this.props.id)
             .then((res) => {
                 if (res.status === 200) alert('Delete successfully.');
+            })
+            .catch((err) => {
+                console.log(err);
             })
     }
 

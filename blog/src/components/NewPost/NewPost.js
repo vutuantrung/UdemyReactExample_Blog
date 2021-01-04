@@ -7,7 +7,8 @@ class NewPost extends Component {
     state = {
         title: '',
         content: '',
-        author: 'Max'
+        author: 'Max',
+        error: false,
     }
 
     postDataHandler = () => {
@@ -20,6 +21,10 @@ class NewPost extends Component {
         axios.post('https://jsonplaceholder.typicode.com/posts', data)
             .then((res) => {
                 if (res.status === 201) alert('Success.');
+            })
+            .catch((err) => {
+                this.setState({ error: true });
+                console.log(err);
             })
     }
 
