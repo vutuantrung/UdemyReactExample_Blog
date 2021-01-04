@@ -23,11 +23,19 @@ class NewPost extends Component {
         axios.post('/posts', data)
             .then((res) => {
                 if (res.status === 201) alert('Success.');
-                this.setState({ submitted: true });
+                //this.setState({ submitted: true });
             })
             .catch((err) => {
-                this.setState({ error: true, submitted: true });
+                this.setState({ error: true });
                 console.log(err);
+            })
+            .finally(() => {
+                // with push we can go back to the previous page in history stack
+                // this.props.history.push('/posts'); ->new-post -> posts, then go back -> new-post
+
+                // This code will replace history stack
+                // new-post then new-post gonna be replaced by post, so we cannot go back
+                this.props.history.replace('/posts');
             })
     }
 
@@ -37,7 +45,7 @@ class NewPost extends Component {
 
     render() {
         let redirect = null;
-        if (this.redirect.submitted) {
+        if (this.state.submitted) {
             redirect = <Redirect to='posts' />;
         }
         return (
