@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-
-//import axios from 'axios';
 import './Blog.css';
 import { Route, NavLink } from 'react-router-dom';
 import Posts from './Posts/Posts';
@@ -15,26 +13,28 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><NavLink
-                                to='/'
-                                exact
-                                activeClassName='my-active'
-                                activeStyle={{
-                                    color: '#fa923f',
-                                    textDecoration: 'underline'
-                                }}
-                            >Home</NavLink></li>
+                            <li>
+                                <NavLink
+                                    to='/'
+                                    exact
+                                    activeClassName='my-active'
+                                    activeStyle={{
+                                        color: '#fa923f',
+                                        textDecoration: 'underline'
+                                    }}
+                                >Home</NavLink>
+                            </li>
                             <li><NavLink to={{
                                 pathname: '/new-post',
                                 hash: '#submit',
-                                search: 'quick-submit=true'
+                                search: 'start=5'
                             }}>New Post</NavLink></li>
                         </ul>
                     </nav>
                 </header>
                 <Route path='/' exact component={Posts} />
-                <Route path='/new-post' exact component={NewPost} />
-                <Route path='/:id' exact component={FullPost} />
+                <Route path='/new-post' component={NewPost} />
+                <Route path='/:id' component={FullPost} />
             </div>
         );
     }
