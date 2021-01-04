@@ -2,7 +2,6 @@ import axios from '../../../axios';
 import React, { Component } from 'react';
 import Post from '../../../components/Post/Post';
 import './Posts.css';
-import { Link } from 'react-router-dom';
 
 class Posts extends Component {
     state = {
@@ -12,7 +11,11 @@ class Posts extends Component {
     }
 
     postSelectedHandler = (id) => {
-        this.setState({ selectedPosstId: id });
+        //this.setState({ selectedPosstId: id });
+
+        // Navigate programmatically, navigation basically is a stack of pages
+        this.props.history.push({ pathname: '/posts/' + id })
+        // or: this.props.history.push('/posts/' + id)
     }
 
     componentDidMount() {
@@ -39,13 +42,16 @@ class Posts extends Component {
         let posts = <p style={{ textAlign: 'center' }}>Something went wrong!</p>
         if (!this.state.error) {
             posts = this.state.posts.map(post => {
-                return <Link key={post.id} to={'/posts/' + post.id}>
+                return (
+                    //<Link key={post.id} to={'/posts/' + post.id}>
                     <Post
+                        key={post.id}
                         title={post.title}
                         author={post.author}
                         clicked={() => this.postSelectedHandler(post.id)}
                     />
-                </Link>
+                    //</Link>
+                )
             })
         }
 
